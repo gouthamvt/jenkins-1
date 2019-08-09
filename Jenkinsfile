@@ -16,6 +16,10 @@ pipeline {
         powershell 'java -version'
         powershell 'mvn -version'
 	    }
+	
+    }
+	stage('OK')
+	{
 	    steps{
 		    
 	def project_path = "spring-boot-samples/spring-boot-sample-atmosphere"  
@@ -25,7 +29,7 @@ pipeline {
         powershell 'mvn clean package'
       }
 	    }
-    }
+		}
   }
 }
 
