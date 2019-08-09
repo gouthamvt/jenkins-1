@@ -11,14 +11,12 @@ pipeline {
         jdk 'JDK8'
         maven 'apache-maven-3.6.1'
       }
-      steps {
         powershell 'java -version'
         powershell 'mvn -version'
 	def project_path = "spring-boot-samples/spring-boot-sample-atmosphere"    
         dir(project_path)
     	{
         powershell 'mvn clean package'
-    	}
       }
     }
   }
