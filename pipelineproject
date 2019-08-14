@@ -21,16 +21,15 @@ pipeline {
 	 stage('OK')
 	{
 	    steps{
-	/*	    
-	def project_path = "spring-boot-samples/spring-boot-sample-atmosphere"  
+	
 	    
-        dir(project_path)
+        dir('C:\Jenkins\workspace\PIPETEST')
     	{
-			*/
+			
         powershell 'mvn clean package'
-      //}
+      
 	    }
 		} 
   }
 }
-
+}
