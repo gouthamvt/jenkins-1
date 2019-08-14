@@ -37,9 +37,42 @@ pipeline {
       }
 		
         steps{
-		    emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
-
-Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'kukuizklan@gmail.com'
+		    emailext body: '''pipeline {
+    agent none
+    stages{
+        stage (\'Checkout\'){
+			agent any
+			steps{
+			echo "Code Checkout"
+			}
+		}
+		stage (\'Build\'){
+			agent any
+			steps{
+			echo "Building"
+			}
+		}
+		stage (\'Approval\'){
+			agent none
+            steps{
+                script {
+                        approved = input message: \'Release to production?\', ok: \'Yes\', submitter: \'pm\'
+    					if (approved) {
+    						withCredentials([usernamePassword(credentialsId: \'privilegedCreds\', usernameVariable: \'USER\', passwordVariable: \'PASS\')]) {
+    						echo "Approved"
+    					        		}
+    					}
+    			}
+            }
+        }
+		stage (\'Deploy\'){
+			agent any
+			steps{
+			echo "Deploying"
+			}
+		}
+    }
+}''', subject: 'Approval', to: 'kukuizklan@gmail.com'
 
             withSonarQubeEnv(installationName: 'sonar'){
                 powershell 'mvn clean package sonar:sonar'
