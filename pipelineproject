@@ -31,7 +31,11 @@ pipeline {
 	
 	stage('SONARQUBE')
 	{
-		
+		steps{
+		withSonarQubeEnv(installationName: 'sonar')
+		{powershell 'mvn clean package sonar: sonar'
+		}
+		}
 	}
 }
 }
