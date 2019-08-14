@@ -29,18 +29,12 @@ pipeline {
 	 
     }
 	
-	stage('SONARQUBE stage')
-	{
-		tools {
-        jdk 'JDK8'
-        maven 'apache-maven-3.6.1'
-      }
-		steps{
-		withSonarQubeEnv(installationName: 'sonar')
-		{
-			powershell 'mvn clean package sonar: sonar'
-		}
-		}
-	}
+	stage('SonarScan') {
+        steps{
+            withSonarQubeEnv(installationName: 'sonar'){
+                powershell 'mvn clean package sonar:sonar'
+            }
+        }
+    }
 }
 }
