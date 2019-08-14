@@ -1,11 +1,17 @@
 pipeline {
   agent { label 'WIndows' }
+  
+  
   stages {
-    stage('Source') { 
+    
+	
+	stage('Source') { 
       steps {
       checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'http://172.31.12.103/devops/happytrip-linpush.git']]])
               }
     }
+	
+	
      stage('Compile') { 
       tools {
         jdk 'JDK8'
@@ -19,8 +25,13 @@ pipeline {
             powershell label: '', script: 'mvn clean package'
 	    }
 	
-    } 
+		}
 	 
-}
+    }
+	
+	stage('SONARQUBE')
+	{
+		
+	}
 }
 }
