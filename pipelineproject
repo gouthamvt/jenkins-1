@@ -18,18 +18,19 @@ pipeline {
 	    }
 	
     } 
-	/* stage('OK')
+	 stage('OK')
 	{
 	    steps{
-		    
+	/*	    
 	def project_path = "spring-boot-samples/spring-boot-sample-atmosphere"  
 	    
         dir(project_path)
     	{
+			*/
         powershell 'mvn clean package'
-      }
+      //}
 	    }
-		} */
+		} 
   }
 }
 
