@@ -23,7 +23,7 @@ pipeline {
 	    steps{
 	
 	    
-        dir('C:\Jenkins\workspace\PIPETEST')
+        dir('C:/Jenkins/workspace/PIPETEST')
     	{
 			
         powershell 'mvn clean package'
