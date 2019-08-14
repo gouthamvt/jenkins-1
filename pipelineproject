@@ -6,10 +6,10 @@ pipeline {
       checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'http://172.31.12.103/devops/happytrip-linpush.git']]])
               }
     }
-/*     stage('Compile') { 
+     stage('Compile') { 
       tools {
         jdk 'JDK8'
-        maven 'apache-maven-3.6.1'
+        maven 'Maven'
       }
 	    steps{
 		    
@@ -17,7 +17,7 @@ pipeline {
         powershell 'mvn -version'
 	    }
 	
-    } */
+    } 
 	/* stage('OK')
 	{
 	    steps{
