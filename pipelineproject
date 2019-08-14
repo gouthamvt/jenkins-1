@@ -47,7 +47,7 @@ pipeline {
 	post
 	{
 		always{
-		deploy adapters: [tomcat7(path: '', url: 'http://172.31.12.146:8081/')], contextPath: '/deploy', war: 'target/prabhav-1.war'
+				deploy adapters: [tomcat7(credentialsId: '38ab684a-cb9a-4b84-b671-6d470f8d70bd', path: '', url: 'http://172.31.12.146:8081/')], contextPath: 'deploy/', war: 'target/prabhav-1.war'
 		}
 	}
 	
