@@ -29,6 +29,7 @@ pipeline {
 	 
     }
 	
+	/*
 	stage('SonarScan') {
 		tools {
         jdk 'JDK8'
@@ -41,6 +42,7 @@ pipeline {
             }
         }
     }
+	*/
   }
 	post
 	{
