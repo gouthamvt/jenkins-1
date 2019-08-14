@@ -15,7 +15,7 @@ pipeline {
 		    
         powershell 'java -version'
         powershell 'mvn -version'
-		dir("C:/jenkins/workspace/HappTrip"){
+		dir("C:/jenkins/workspace/PIPETEST"){
             powershell label: '', script: 'mvn clean package'
 	    }
 	
