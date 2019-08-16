@@ -67,7 +67,7 @@ Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_N
 			 
        
            steps{
-              // powershell label: '', script: "Remove-Item -path 'C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\deploy.war' -force"
+              powershell label: '', script: "Remove-Item -path 'C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\deploy.war' -force"
 			  deploy adapters: [tomcat7(credentialsId: '9f8567f4-243d-4b98-92dc-aeae2d53eaf0', path: '', url: 'http://172.31.12.146:8081/')], contextPath: '/deploy', war: 'target/prabhav-1.war'
 			   
 		}
