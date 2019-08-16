@@ -28,51 +28,30 @@ pipeline {
 		}
 	 
     }
-	
-	
-	stage('SonarScan') {
-		tools {
-        jdk 'JDK8'
-        maven 'apache-maven-3.6.1'
-      }
-		
-        steps{
-		    emailext body: '''pipeline {
-    agent none
-    stages{
-        stage (\'Checkout\'){
-			agent any
-			steps{
-			echo "Code Checkout"
-			}
-		}
-		stage (\'Build\'){
-			agent any
-			steps{
-			echo "Building"
-			}
-		}
-		stage (\'Approval\'){
+	stage ('Approval'){
 			agent none
             steps{
                 script {
-                        approved = input message: \'Release to production?\', ok: \'Yes\', submitter: \'pm\'
+                        approved = input message: 'Release to production?', ok: 'Yes', submitter: 'pm'
     					if (approved) {
-    						withCredentials([usernamePassword(credentialsId: \'privilegedCreds\', usernameVariable: \'USER\', passwordVariable: \'PASS\')]) {
+    						withCredentials([usernamePassword(credentialsId: 'privilegedCreds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
     						echo "Approved"
     					        		}
     					}
     			}
             }
         }
-		stage (\'Deploy\'){
-			agent any
-			steps{
-			echo "Deploying"
-			}
-		}
-    }
-}''', subject: 'Approval', to: 'kukuizklan@gmail.com'
+	
+	stage('SonarScan and notify by email') {
+		tools {
+        jdk 'JDK8'
+        maven 'apache-maven-3.6.1'
+      }
+		
+        steps{
+		    emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'kukuizklan@gmail.com'
 
             withSonarQubeEnv(installationName: 'sonar'){
                 powershell 'mvn clean package sonar:sonar'
@@ -84,8 +63,15 @@ pipeline {
   }
 	post
 	{
-		always{
+		success{
+			 
+       
+           steps{
+               powershell label: '', script: 'Remove-Item -path 'C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\deploy.war' -force'
+             
+       
 				deploy adapters: [tomcat7(credentialsId: '9f8567f4-243d-4b98-92dc-aeae2d53eaf0', path: '', url: 'http://172.31.12.146:8081/')], contextPath: '/deploy', war: 'target/prabhav-1.war'
+		}
 		}
 	}
 	
